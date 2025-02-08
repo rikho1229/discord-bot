@@ -6,9 +6,9 @@ import os, asyncio
 from discord import member
 from discord.ext.commands import has_permissions, MissingPermissions
 
-from apikey import BOTTOKEN #imports the key from the apikey file
+from apikey import BOTTOKEN 
 from help_cog import help_cog
-from music_cog import music_cog #importing from music_cog file
+from music_cog import music_cog 
 
 intents = discord.Intents.default()
 intents.members = True
