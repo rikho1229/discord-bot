@@ -19,7 +19,7 @@ class music_cog(commands.Cog):
 
         self.vc = None
         self.ytdl = YoutubeDL(self.YDL_OPTIONS)
-    
+
     def search_yt(self, item):
         if item.startswith("https://"):
             try:
@@ -30,9 +30,15 @@ class music_cog(commands.Cog):
                 print(f"Error occurred: {e}")
                 return False
         else:
-            search = VideosSearch(item, limit=1)
-            result = search.result()["result"][0]
-            return {'source': result["link"], 'title': result["title"]}
+            try:
+                # Perform the search using yt-dlp
+                result = self.ytdl.extract_info(f"ytsearch:{item}", download=False, ie_key='YoutubeSearch')
+                video_info = result['entries'][0]  # Get the first search result
+                return {'source': video_info['url'], 'title': video_info['title']}
+            except Exception as e:
+                print(f"Error occurred during YouTube search: {e}")
+                return False
+
 
     
     async def play_next(self): #takes care of playing music that is in the queue
